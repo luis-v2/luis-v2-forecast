@@ -1,0 +1,14 @@
+[project]
+name = "luis_v2_forecast"
+version = "0.1.0"
+description = "LUIS V2 Forecast"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ["requests", "load_dotenv", "cx_Oracle"]
+
+[project.scripts]
+luis_v2_forecast = "luis_v2_forecast.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
