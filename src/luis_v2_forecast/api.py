@@ -2,7 +2,7 @@ from .config import API_BASE_URL
 from datetime import datetime, timedelta
 import requests
 
-def fetch_air_data(station: str, component: str, days: int) -> dict:
+def fetch_air_data(station: int, component: int, days: int) -> dict:
     """Get air data from the API"""
     try:
 
@@ -26,17 +26,17 @@ def fetch_air_data(station: str, component: str, days: int) -> dict:
 def fetch_available_stations() -> dict:
     """Get available stations from the API"""
     try:
-        response = requests.get(API_BASE_URL + 'stations')
+        response = requests.get(API_BASE_URL + 'station')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         print(f"API-Fehler: {e}")
         return {}
     
-def fetch_available_components() -> dict:
+def fetch_available_components(station_id: int) -> dict:
     """Get available components from the API"""
     try:
-        response = requests.get(API_BASE_URL + 'components')
+        response = requests.get(API_BASE_URL + "station/" + str(station_id) + '/component')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
