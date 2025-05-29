@@ -11,7 +11,7 @@ def fetch_air_data(station: int, component: int, days: int) -> dict:
             "components": [component],
             "startDate": str((datetime.now() - timedelta(days=days)).date()),
             "endDate": str((datetime.now() - timedelta(days=1)).date()),
-            "interval": "daily",
+            "average": 1,
             "interpolate": False,
             "fileFormat": "json"
         }
