@@ -16,29 +16,29 @@ def fetch_air_data(station: int, component: int, days: int) -> dict:
             "fileFormat": "json"
         }
 
-        response = requests.post(API_BASE_URL + 'data', json=data)
+        response = requests.post(API_BASE_URL + '/api/data', json=data)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
-        print(f"API-Fehler: {e}")
+        print(f"Data API-Error: {e}")
         return {}
     
 def fetch_available_stations() -> dict:
     """Get available stations from the API"""
     try:
-        response = requests.get(API_BASE_URL + 'station')
+        response = requests.get(API_BASE_URL + '/api/station')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
-        print(f"API-Fehler: {e}")
+        print(f"Station API-Error: {e}")
         return {}
     
 def fetch_available_components(station_id: int) -> dict:
     """Get available components from the API"""
     try:
-        response = requests.get(API_BASE_URL + "station/" + str(station_id) + '/component')
+        response = requests.get(API_BASE_URL + "/api/station/" + str(station_id) + '/component')
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
-        print(f"API-Fehler: {e}")
+        print(f"Component API-Error: {e}")
         return {}
