@@ -4,7 +4,13 @@ version = "0.1.0"
 description = "LUIS V2 Forecast"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = ["requests", "load_dotenv", "cx_Oracle"]
+dependencies = [
+    "prophet",             # Forecasting model
+    "pandas",              # Data processing
+    "requests",            # API requests
+    "python-dotenv",       # Load variables from .env
+    "psycopg2-binary",           # PostgreSQL
+]
 
 [project.scripts]
 luis_v2_forecast = "luis_v2_forecast.__main__:main"
