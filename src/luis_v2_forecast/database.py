@@ -1,7 +1,7 @@
 import psycopg2
 
 class database:
-    def __init__(self, username, password, host, port, dbname):
+    def __init__(self, username: object, password: object, host: object, port: object, dbname: object) -> None:
         self.connection = psycopg2.connect(
             user=username,
             password=password,
@@ -20,7 +20,6 @@ class database:
         try:
             self.cursor.execute(sql, values)
             self.connection.commit()
-            print(f"Inserted into {table_name}")
         except psycopg2.DatabaseError as e:
             print(f"Insert error: {e}")
             self.connection.rollback()
