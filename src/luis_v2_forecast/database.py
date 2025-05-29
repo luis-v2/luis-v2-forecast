@@ -1,28 +1,28 @@
-import cx_Oracle
+import psycopg2
 
 class database:
-    def __init__(self, username, password, host, port, service_name):
-        dsn = cx_Oracle.makedsn(host, port, service_name=service_name)
-        self.connection = cx_Oracle.connect(user=username, password=password, dsn=dsn)
+    def __init__(self, username, password, host, port, dbname):
+        self.connection = psycopg2.connect(
+            user=username,
+            password=password,
+            host=host,
+            port=port,
+            dbname=dbname
+        )
         self.cursor = self.connection.cursor()
         print("Database connection opened")
 
     def insert_data(self, table_name, data: dict):
-        """
-        Insert data in the given table
-        :param table_name: table name
-        :param data: Dictionary with column name as key and value as value
-        """
         columns = ', '.join(data.keys())
-        placeholders = ', '.join([f":{i+1}" for i in range(len(data))])
+        placeholders = ', '.join(['%s'] * len(data))
         values = list(data.values())
-        sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+        sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders}) ON CONFLICT DO NOTHING"
         try:
             self.cursor.execute(sql, values)
             self.connection.commit()
-            print(f"Daten inserted into {table_name}.")
-        except cx_Oracle.DatabaseError as e:
-            print(f"Error while inserting data: {e}")
+            print(f"Inserted into {table_name}")
+        except psycopg2.DatabaseError as e:
+            print(f"Insert error: {e}")
             self.connection.rollback()
 
     def close(self):
